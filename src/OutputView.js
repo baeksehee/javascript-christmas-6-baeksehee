@@ -1,6 +1,14 @@
 import { MissionUtils } from "@woowacourse/mission-utils";
 import { christmasInstance } from "./InputView.js";
-import { ChampagnePromotionAvailable, toTalPriceLogic } from "./DomainLogic.js";
+import {
+  ChampagnePromotionAvailable,
+  receivedChampagnePromotion,
+  receivedD_dayPromotion,
+  receivedSpecialPromotion,
+  receivedWeekDayPromotion,
+  receivedWeekendPromotion,
+  toTalPriceLogic,
+} from "./DomainLogic.js";
 
 const OutputView = {
   printIntroduction() {
@@ -37,6 +45,44 @@ const OutputView = {
     if (CHAMPAGNEPROMOTION_AVAILABLE === true) {
       MissionUtils.Console.print("샴페인 1개");
     } else MissionUtils.Console.print("없음");
+  },
+
+  printReceivedPromotion() {
+    MissionUtils.Console.print("\n<혜택 내역>");
+    const DDAY_AVAILABLE = receivedD_dayPromotion().toLocaleString();
+    const WEEKDAY_AVAILABLE = receivedWeekDayPromotion().toLocaleString();
+    const WEEKEND_AVAILABLE = receivedWeekendPromotion().toLocaleString();
+    const CHAMPAGNE_AVAILABLE = receivedChampagnePromotion().toLocaleString();
+    const SPECIAL_AVAILABLE = receivedSpecialPromotion().toLocaleString();
+
+    let anyPromotionApplied = false;
+
+    if (DDAY_AVAILABLE !== "0") {
+      MissionUtils.Console.print(
+        `크리스마스 디데이 할인: -${DDAY_AVAILABLE}원`
+      );
+      anyPromotionApplied = true;
+    }
+
+    if (WEEKDAY_AVAILABLE !== "0") {
+      MissionUtils.Console.print(`평일 할인: -${WEEKDAY_AVAILABLE}원`);
+      anyPromotionApplied = true;
+    }
+    if (WEEKEND_AVAILABLE !== "0") {
+      MissionUtils.Console.print(`주말 할인: -${WEEKEND_AVAILABLE}원`);
+      anyPromotionApplied = true;
+    }
+    if (SPECIAL_AVAILABLE !== "0") {
+      MissionUtils.Console.print(`특별 할인: -${SPECIAL_AVAILABLE}원`);
+      anyPromotionApplied = true;
+    }
+    if (CHAMPAGNE_AVAILABLE !== "0") {
+      MissionUtils.Console.print(`증정 이벤트: -${CHAMPAGNE_AVAILABLE}원`);
+      anyPromotionApplied = true;
+    }
+    if (!anyPromotionApplied) {
+      MissionUtils.Console.print("없음");
+    }
   },
 };
 

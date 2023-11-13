@@ -15,6 +15,14 @@ const MENUS_PRICE = {
   샴페인: 25000,
 };
 
+const WEEKDAY = [
+  3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 31,
+];
+
+const WEEKEND = [1, 2, 8, 9, 15, 16, 22, 23, 29, 30];
+
+const STAR_DAY = [3, 10, 17, 24, 25, 31];
+
 export function toTalPriceLogic(menus) {
   let totalPrice = 0;
 
@@ -35,4 +43,85 @@ export function ChampagnePromotionAvailable() {
   if (TOTAL_PRICE >= 120000) {
     return true;
   } else return false;
+}
+
+// d-day 할인
+export function receivedD_dayPromotion() {
+  const DATE = christmasInstance.getDate();
+  let minusPrice = 1000;
+  let available = true;
+
+  if (DATE >= 26) {
+    available = false;
+  }
+
+  if (available) {
+    for (let i = 1; i < DATE; i++) {
+      minusPrice += 100;
+    }
+  } else {
+    minusPrice = 0;
+  }
+
+  return minusPrice;
+}
+
+// WEEKDAY 할인
+export function receivedWeekDayPromotion() {
+  const MENUS = christmasInstance.getMenus();
+  const DATE = christmasInstance.getDate();
+  const DESSERT = [`초코케이크`, `아이스크림`];
+  let minusPrice = 0;
+
+  if (WEEKDAY.includes(DATE)) {
+    MENUS.forEach((menu) => {
+      const [MENU_NAME, QUANTITY] = menu.split("-");
+      const PARSEDQUANTITY = parseInt(QUANTITY, 10);
+
+      if (DESSERT.includes(MENU_NAME) && PARSEDQUANTITY > 0) {
+        minusPrice += 2023 * PARSEDQUANTITY;
+      }
+    });
+  }
+
+  return minusPrice;
+}
+
+// WEEKEND 할인
+export function receivedWeekendPromotion() {
+  const MENUS = christmasInstance.getMenus();
+  const DATE = christmasInstance.getDate();
+  const MAIN = ["티본스테이크", "바비큐립", "해산물파스타", "크리스마스파스타"];
+  let minusPrice = 0;
+
+  if (WEEKEND.includes(DATE)) {
+    MENUS.forEach((menu) => {
+      const [MENU_NAME, QUANTITY] = menu.split("-");
+      const PARSEDQUANTITY = parseInt(QUANTITY, 10);
+
+      if (MAIN.includes(MENU_NAME) && PARSEDQUANTITY > 0) {
+        minusPrice += 2023 * PARSEDQUANTITY;
+      }
+    });
+  }
+
+  return minusPrice;
+}
+
+export function receivedSpecialPromotion() {
+  const DATE = christmasInstance.getDate();
+  const MINUS_PRICE = 1000;
+  if (STAR_DAY.includes(DATE)) {
+    return MINUS_PRICE;
+  } else return 0;
+}
+
+// 샴페인 증정 이벤트
+export function receivedChampagnePromotion() {
+  const CHAMPAGNE_AVAILABLE = ChampagnePromotionAvailable();
+  const CHAMPAGNE_PRICE = 25000;
+
+  if (CHAMPAGNE_AVAILABLE) {
+    return CHAMPAGNE_PRICE;
+  } else return 0;
 }

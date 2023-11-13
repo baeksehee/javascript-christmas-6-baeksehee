@@ -12,6 +12,7 @@ class App {
       OutputView.printMenu();
       OutputView.printTotalPrice();
       OutputView.printChampagnePromotion();
+      OutputView.printReceivedPromotion();
     } catch (error) {
       MissionUtils.Console.print(error.message);
     }
