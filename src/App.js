@@ -1,5 +1,21 @@
+import { MissionUtils } from "@woowacourse/mission-utils";
+import InputView from "./InputView.js";
+import OutputView from "./OutputView.js";
+
 class App {
-  async run() {}
+  async run() {
+    try {
+      OutputView.printIntroduction();
+      await InputView.readDate();
+      await InputView.readOrderMenu();
+      OutputView.printBenefitIntroduction();
+      OutputView.printMenu();
+      OutputView.printTotalPrice();
+      OutputView.printChampagnePromotion();
+    } catch (error) {
+      MissionUtils.Console.print(error.message);
+    }
+  }
 }
 
 export default App;
