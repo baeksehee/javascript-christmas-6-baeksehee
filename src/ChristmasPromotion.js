@@ -52,7 +52,7 @@ class ChristmasPromotion {
         );
       }
 
-      if (QUANTITY_PART <= 0) {
+      if (isNaN(QUANTITY_PART) || QUANTITY_PART <= 0) {
         throw new Error(
           `[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.`
         );
