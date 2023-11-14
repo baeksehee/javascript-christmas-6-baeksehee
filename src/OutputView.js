@@ -8,6 +8,7 @@ import {
   receivedTotalBenefitPrice,
   receivedWeekDayPromotion,
   receivedWeekendPromotion,
+  sendBadge,
   toTalPriceLogic,
   totalPriceAfterDiscount,
 } from "./DomainLogic.js";
@@ -95,6 +96,12 @@ const OutputView = {
     MissionUtils.Console.print("\n<할인 후 예상 결제 금액>");
     const TOTAL_AFTER = totalPriceAfterDiscount().toLocaleString();
     MissionUtils.Console.print(`-${TOTAL_AFTER}원`);
+  },
+
+  printEventBadge() {
+    MissionUtils.Console.print("\n<12월 이벤트 배지>");
+    const GET_BADGE = sendBadge();
+    MissionUtils.Console.print(`${GET_BADGE}`);
   },
 };
 

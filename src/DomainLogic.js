@@ -164,3 +164,16 @@ export function totalPriceAfterDiscount() {
 
   return TOTAL_AFTER;
 }
+
+export function sendBadge() {
+  const TOTAL_AFTER = totalPriceAfterDiscount();
+  if (TOTAL_AFTER >= 5000) {
+    return "별";
+  }
+  if (TOTAL_AFTER >= 10000) {
+    return "트리";
+  }
+  if (TOTAL_AFTER >= 20000) {
+    return "산타";
+  }
+}

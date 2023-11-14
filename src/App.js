@@ -15,6 +15,7 @@ class App {
       OutputView.printReceivedPromotion();
       OutputView.printReceivedTotalBenefitPrice();
       OutputView.printTotalPriceAfterDiscount();
+      OutputView.printEventBadge();
     } catch (error) {
       MissionUtils.Console.print(error.message);
     }
