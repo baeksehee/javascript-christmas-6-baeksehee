@@ -5,7 +5,7 @@ import {
   receivedChampagnePromotion,
   receivedD_dayPromotion,
   receivedSpecialPromotion,
-  receivedTotalDiscountedPrice,
+  receivedTotalBenefitPrice,
   receivedWeekDayPromotion,
   receivedWeekendPromotion,
   toTalPriceLogic,
@@ -86,11 +86,10 @@ const OutputView = {
     }
   },
 
-  printReceivedTotalDiscountedPrice() {
+  printReceivedTotalBenefitPrice() {
     MissionUtils.Console.print("\n<총혜택 금액>");
-    const TOTAL_DISCOUNTEDPRICE =
-      receivedTotalDiscountedPrice().toLocaleString();
-    MissionUtils.Console.print(`-${TOTAL_DISCOUNTEDPRICE}원`);
+    const TOTAL_BENEFITPRICE = receivedTotalBenefitPrice().toLocaleString();
+    MissionUtils.Console.print(`-${TOTAL_BENEFITPRICE}원`);
   },
 };
 

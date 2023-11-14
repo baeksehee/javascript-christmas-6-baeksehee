@@ -126,19 +126,19 @@ export function receivedChampagnePromotion() {
   } else return 0;
 }
 
-export function receivedTotalDiscountedPrice() {
+export function receivedTotalBenefitPrice() {
   const dDayAvailable = receivedD_dayPromotion();
   const weekdayAvailable = receivedWeekDayPromotion();
   const weekendAvailable = receivedWeekendPromotion();
   const champagneAvailable = receivedChampagnePromotion();
   const specialAvailable = receivedSpecialPromotion();
 
-  const totalDiscountedPrice =
+  const totalBenefitPrice =
     dDayAvailable +
     weekdayAvailable +
     weekendAvailable +
     champagneAvailable +
     specialAvailable;
 
-  return totalDiscountedPrice;
+  return totalBenefitPrice;
 }

@@ -13,7 +13,7 @@ class App {
       OutputView.printTotalPrice();
       OutputView.printChampagnePromotion();
       OutputView.printReceivedPromotion();
-      OutputView.printReceivedTotalDiscountedPrice();
+      OutputView.printReceivedTotalBenefitPrice();
     } catch (error) {
       MissionUtils.Console.print(error.message);
     }
