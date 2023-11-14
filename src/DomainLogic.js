@@ -62,21 +62,35 @@ export function receivedD_dayPromotion() {
   return minusPrice;
 }
 
+function minusPriceCalculator(
+  menus,
+  date,
+  validDays,
+  targetMenuCategories,
+  discountMultiplier
+) {
+  let minusPrice = 0;
+
+  if (!validDays.includes(date)) {
+    return minusPrice;
+  }
+
+  menus.forEach((menu) => {
+    const { MENU_NAME, QUANTITY } = menuAndQuantity(menu);
+    if (targetMenuCategories.includes(MENU_NAME))
+      minusPrice += discountMultiplier * QUANTITY;
+  });
+
+  return minusPrice;
+}
+
 // WEEKDAY 할인
 export function receivedWeekDayPromotion() {
   const MENUS = christmasInstance.getMenus();
   const DATE = christmasInstance.getDate();
   const DESSERT = [`초코케이크`, `아이스크림`];
-  let minusPrice = 0;
 
-  if (WEEKDAY.includes(DATE)) {
-    MENUS.forEach((menu) => {
-      const { MENU_NAME, QUANTITY } = menuAndQuantity(menu);
-      if (DESSERT.includes(MENU_NAME)) minusPrice += 2023 * QUANTITY;
-    });
-  }
-
-  return minusPrice;
+  return minusPriceCalculator(MENUS, DATE, WEEKDAY, DESSERT, 2023);
 }
 
 // WEEKEND 할인
@@ -84,16 +98,8 @@ export function receivedWeekendPromotion() {
   const MENUS = christmasInstance.getMenus();
   const DATE = christmasInstance.getDate();
   const MAIN = ["티본스테이크", "바비큐립", "해산물파스타", "크리스마스파스타"];
-  let minusPrice = 0;
 
-  if (WEEKEND.includes(DATE)) {
-    MENUS.forEach((menu) => {
-      const { MENU_NAME, QUANTITY } = menuAndQuantity(menu);
-      if (MAIN.includes(MENU_NAME)) minusPrice += 2023 * QUANTITY;
-    });
-  }
-
-  return minusPrice;
+  return minusPriceCalculator(MENUS, DATE, WEEKEND, MAIN, 2023);
 }
 
 export function receivedSpecialPromotion() {
