@@ -1,4 +1,5 @@
 import { christmasInstance } from "./InputView.js";
+import menuAndQuantity from "./utils/menuAndQuantity.js";
 
 const MENUS_PRICE = {
   양송이수프: 6000,
@@ -14,13 +15,10 @@ const MENUS_PRICE = {
   레드와인: 60000,
   샴페인: 25000,
 };
-
 const WEEKDAY = [
   3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 31,
 ];
-
 const WEEKEND = [1, 2, 8, 9, 15, 16, 22, 23, 29, 30];
-
 const STAR_DAY = [3, 10, 17, 24, 25, 31];
 
 export function toTalPriceLogic() {
@@ -28,12 +26,9 @@ export function toTalPriceLogic() {
   let totalPrice = 0;
 
   MENUS.forEach((menu) => {
-    const [MENU_NAME, QUANTITY] = menu.split("-");
-    const PARSEDQUANTITY = parseInt(QUANTITY, 10);
-
-    if (MENUS_PRICE.hasOwnProperty(MENU_NAME) && PARSEDQUANTITY > 0) {
-      totalPrice += MENUS_PRICE[MENU_NAME] * PARSEDQUANTITY;
-    }
+    const { MENU_NAME, QUANTITY } = menuAndQuantity(menu);
+    if (MENUS_PRICE.hasOwnProperty(MENU_NAME))
+      totalPrice += MENUS_PRICE[MENU_NAME] * QUANTITY;
   });
 
   return totalPrice;
@@ -76,12 +71,8 @@ export function receivedWeekDayPromotion() {
 
   if (WEEKDAY.includes(DATE)) {
     MENUS.forEach((menu) => {
-      const [MENU_NAME, QUANTITY] = menu.split("-");
-      const PARSEDQUANTITY = parseInt(QUANTITY, 10);
-
-      if (DESSERT.includes(MENU_NAME) && PARSEDQUANTITY > 0) {
-        minusPrice += 2023 * PARSEDQUANTITY;
-      }
+      const { MENU_NAME, QUANTITY } = menuAndQuantity(menu);
+      if (DESSERT.includes(MENU_NAME)) minusPrice += 2023 * QUANTITY;
     });
   }
 
@@ -97,12 +88,8 @@ export function receivedWeekendPromotion() {
 
   if (WEEKEND.includes(DATE)) {
     MENUS.forEach((menu) => {
-      const [MENU_NAME, QUANTITY] = menu.split("-");
-      const PARSEDQUANTITY = parseInt(QUANTITY, 10);
-
-      if (MAIN.includes(MENU_NAME) && PARSEDQUANTITY > 0) {
-        minusPrice += 2023 * PARSEDQUANTITY;
-      }
+      const { MENU_NAME, QUANTITY } = menuAndQuantity(menu);
+      if (MAIN.includes(MENU_NAME)) minusPrice += 2023 * QUANTITY;
     });
   }
 
@@ -133,6 +120,7 @@ export function receivedTotalBenefitPrice() {
   const WEEKEND_AVAILABLE = receivedWeekendPromotion();
   const CHAMPAGNE_AVAILABLE = receivedChampagnePromotion();
   const SPECIAL_AVAILABLE = receivedSpecialPromotion();
+  let resultTotalBenefitPrice;
 
   const totalBenefitPrice =
     DDAY_AVAILABLE +
@@ -141,7 +129,8 @@ export function receivedTotalBenefitPrice() {
     CHAMPAGNE_AVAILABLE +
     SPECIAL_AVAILABLE;
 
-  return totalBenefitPrice;
+  if (totalBenefitPrice === 0) return 0;
+  if (totalBenefitPrice > 0) return -totalBenefitPrice;
 }
 
 export function receivedTotalDsicountPrice() {
@@ -166,14 +155,14 @@ export function totalPriceAfterDiscount() {
 }
 
 export function sendBadge() {
-  const TOTAL_AFTER = totalPriceAfterDiscount();
-  if (TOTAL_AFTER >= 5000) {
-    return "별";
-  }
-  if (TOTAL_AFTER >= 10000) {
-    return "트리";
-  }
+  const TOTAL_AFTER = -receivedTotalBenefitPrice();
   if (TOTAL_AFTER >= 20000) {
     return "산타";
+  } else if (TOTAL_AFTER >= 10000) {
+    return "트리";
+  } else if (TOTAL_AFTER >= 5000) {
+    return "별";
+  } else {
+    return "없음";
   }
 }

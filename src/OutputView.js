@@ -12,6 +12,7 @@ import {
   toTalPriceLogic,
   totalPriceAfterDiscount,
 } from "./DomainLogic.js";
+import menuAndQuantity from "./utils/menuAndQuantity.js";
 
 const OutputView = {
   printIntroduction() {
@@ -30,7 +31,8 @@ const OutputView = {
     MissionUtils.Console.print("<주문 메뉴>");
     const ORDERED_MENUS = christmasInstance.getMenus();
     ORDERED_MENUS.map(function (eachMenu) {
-      MissionUtils.Console.print(`${eachMenu}`);
+      const { MENU_NAME, QUANTITY } = menuAndQuantity(eachMenu);
+      MissionUtils.Console.print(`${MENU_NAME} ${QUANTITY}개`);
     });
   },
 
@@ -89,13 +91,13 @@ const OutputView = {
   printReceivedTotalBenefitPrice() {
     MissionUtils.Console.print("\n<총혜택 금액>");
     const TOTAL_BENEFITPRICE = receivedTotalBenefitPrice().toLocaleString();
-    MissionUtils.Console.print(`-${TOTAL_BENEFITPRICE}원`);
+    MissionUtils.Console.print(`${TOTAL_BENEFITPRICE}원`);
   },
 
   printTotalPriceAfterDiscount() {
     MissionUtils.Console.print("\n<할인 후 예상 결제 금액>");
     const TOTAL_AFTER = totalPriceAfterDiscount().toLocaleString();
-    MissionUtils.Console.print(`-${TOTAL_AFTER}원`);
+    MissionUtils.Console.print(`${TOTAL_AFTER}원`);
   },
 
   printEventBadge() {
