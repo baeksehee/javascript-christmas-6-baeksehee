@@ -9,6 +9,7 @@ import {
   receivedWeekDayPromotion,
   receivedWeekendPromotion,
   toTalPriceLogic,
+  totalPriceAfterDiscount,
 } from "./DomainLogic.js";
 
 const OutputView = {
@@ -34,9 +35,7 @@ const OutputView = {
 
   printTotalPrice() {
     MissionUtils.Console.print("\n<할인 전 총주문 금액>");
-    const TOTAL_PRICE = toTalPriceLogic(
-      christmasInstance.getMenus()
-    ).toLocaleString();
+    const TOTAL_PRICE = toTalPriceLogic().toLocaleString();
     MissionUtils.Console.print(`${TOTAL_PRICE}원`);
   },
 
@@ -90,6 +89,12 @@ const OutputView = {
     MissionUtils.Console.print("\n<총혜택 금액>");
     const TOTAL_BENEFITPRICE = receivedTotalBenefitPrice().toLocaleString();
     MissionUtils.Console.print(`-${TOTAL_BENEFITPRICE}원`);
+  },
+
+  printTotalPriceAfterDiscount() {
+    MissionUtils.Console.print("\n<할인 후 예상 결제 금액>");
+    const TOTAL_AFTER = totalPriceAfterDiscount().toLocaleString();
+    MissionUtils.Console.print(`-${TOTAL_AFTER}원`);
   },
 };
 

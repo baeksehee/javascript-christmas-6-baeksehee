@@ -23,10 +23,11 @@ const WEEKEND = [1, 2, 8, 9, 15, 16, 22, 23, 29, 30];
 
 const STAR_DAY = [3, 10, 17, 24, 25, 31];
 
-export function toTalPriceLogic(menus) {
+export function toTalPriceLogic() {
+  const MENUS = christmasInstance.getMenus();
   let totalPrice = 0;
 
-  menus.forEach((menu) => {
+  MENUS.forEach((menu) => {
     const [MENU_NAME, QUANTITY] = menu.split("-");
     const PARSEDQUANTITY = parseInt(QUANTITY, 10);
 
@@ -141,4 +142,19 @@ export function receivedTotalBenefitPrice() {
     specialAvailable;
 
   return totalBenefitPrice;
+}
+
+export function totalPriceAfterDiscount() {
+  const dDayAvailable = receivedD_dayPromotion();
+  const weekdayAvailable = receivedWeekDayPromotion();
+  const weekendAvailable = receivedWeekendPromotion();
+  const specialAvailable = receivedSpecialPromotion();
+  const totalPrice = toTalPriceLogic();
+
+  const totalDiscountPrice =
+    dDayAvailable + weekdayAvailable + weekendAvailable + specialAvailable;
+
+  const TOTAL_AFTER = totalPrice - totalDiscountPrice;
+
+  return TOTAL_AFTER;
 }
