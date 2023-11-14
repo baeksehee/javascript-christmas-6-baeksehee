@@ -128,33 +128,39 @@ export function receivedChampagnePromotion() {
 }
 
 export function receivedTotalBenefitPrice() {
-  const dDayAvailable = receivedD_dayPromotion();
-  const weekdayAvailable = receivedWeekDayPromotion();
-  const weekendAvailable = receivedWeekendPromotion();
-  const champagneAvailable = receivedChampagnePromotion();
-  const specialAvailable = receivedSpecialPromotion();
+  const DDAY_AVAILABLE = receivedD_dayPromotion();
+  const WEEKDAY_AVAILABLE = receivedWeekDayPromotion();
+  const WEEKEND_AVAILABLE = receivedWeekendPromotion();
+  const CHAMPAGNE_AVAILABLE = receivedChampagnePromotion();
+  const SPECIAL_AVAILABLE = receivedSpecialPromotion();
 
   const totalBenefitPrice =
-    dDayAvailable +
-    weekdayAvailable +
-    weekendAvailable +
-    champagneAvailable +
-    specialAvailable;
+    DDAY_AVAILABLE +
+    WEEKDAY_AVAILABLE +
+    WEEKEND_AVAILABLE +
+    CHAMPAGNE_AVAILABLE +
+    SPECIAL_AVAILABLE;
 
   return totalBenefitPrice;
 }
 
+export function receivedTotalDsicountPrice() {
+  const DDAY_AVAILABLE = receivedD_dayPromotion();
+  const WEEKDAY_AVAILABLE = receivedWeekDayPromotion();
+  const WEEKEND_AVAILABLE = receivedWeekendPromotion();
+  const SPECIAL_AVAILABLE = receivedSpecialPromotion();
+
+  const TOTAL_DISCOUNTPRICE =
+    DDAY_AVAILABLE + WEEKDAY_AVAILABLE + WEEKEND_AVAILABLE + SPECIAL_AVAILABLE;
+
+  return TOTAL_DISCOUNTPRICE;
+}
+
 export function totalPriceAfterDiscount() {
-  const dDayAvailable = receivedD_dayPromotion();
-  const weekdayAvailable = receivedWeekDayPromotion();
-  const weekendAvailable = receivedWeekendPromotion();
-  const specialAvailable = receivedSpecialPromotion();
-  const totalPrice = toTalPriceLogic();
+  const TOTAL_DISCOUNTPRICE = receivedTotalDsicountPrice();
+  const TOTAL_PRICE = toTalPriceLogic();
 
-  const totalDiscountPrice =
-    dDayAvailable + weekdayAvailable + weekendAvailable + specialAvailable;
-
-  const TOTAL_AFTER = totalPrice - totalDiscountPrice;
+  const TOTAL_AFTER = TOTAL_PRICE - TOTAL_DISCOUNTPRICE;
 
   return TOTAL_AFTER;
 }
