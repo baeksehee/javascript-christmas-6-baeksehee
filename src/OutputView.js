@@ -5,6 +5,7 @@ import {
   receivedChampagnePromotion,
   receivedD_dayPromotion,
   receivedSpecialPromotion,
+  receivedTotalDiscountedPrice,
   receivedWeekDayPromotion,
   receivedWeekendPromotion,
   toTalPriceLogic,
@@ -83,6 +84,13 @@ const OutputView = {
     if (!anyPromotionApplied) {
       MissionUtils.Console.print("없음");
     }
+  },
+
+  printReceivedTotalDiscountedPrice() {
+    MissionUtils.Console.print("\n<총혜택 금액>");
+    const TOTAL_DISCOUNTEDPRICE =
+      receivedTotalDiscountedPrice().toLocaleString();
+    MissionUtils.Console.print(`-${TOTAL_DISCOUNTEDPRICE}원`);
   },
 };
 

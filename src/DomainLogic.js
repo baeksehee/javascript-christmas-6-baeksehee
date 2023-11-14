@@ -125,3 +125,20 @@ export function receivedChampagnePromotion() {
     return CHAMPAGNE_PRICE;
   } else return 0;
 }
+
+export function receivedTotalDiscountedPrice() {
+  const dDayAvailable = receivedD_dayPromotion();
+  const weekdayAvailable = receivedWeekDayPromotion();
+  const weekendAvailable = receivedWeekendPromotion();
+  const champagneAvailable = receivedChampagnePromotion();
+  const specialAvailable = receivedSpecialPromotion();
+
+  const totalDiscountedPrice =
+    dDayAvailable +
+    weekdayAvailable +
+    weekendAvailable +
+    champagneAvailable +
+    specialAvailable;
+
+  return totalDiscountedPrice;
+}
