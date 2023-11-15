@@ -1,5 +1,6 @@
 import { MissionUtils } from "@woowacourse/mission-utils";
 import ChristmasDomain from "./ChristmasPromotion.js";
+import Order from "./Order.js";
 
 export const christmasInstance = new ChristmasDomain();
 
@@ -16,6 +17,7 @@ const InputView = {
     const input = await MissionUtils.Console.readLineAsync(
       "주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)\n"
     );
+    new Order(input);
     const MENUES = input.split(",");
     christmasInstance.startMenuValidate(MENUES);
   },
