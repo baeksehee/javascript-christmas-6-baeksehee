@@ -1,5 +1,6 @@
 import {
   ChampagnePromotionAvailable,
+  receivedD_dayPromotion,
   toTalPriceLogic,
 } from "../src/DomainLogic";
 import menuAndQuantity from "../src/utils/menuAndQuantity";
@@ -7,6 +8,7 @@ import menuAndQuantity from "../src/utils/menuAndQuantity";
 jest.mock("../src/InputView", () => ({
   christmasInstance: {
     getMenus: jest.fn(),
+    getDate: jest.fn(),
   },
 }));
 
@@ -56,5 +58,21 @@ describe("DomainLogic 기능 테스트", () => {
 
     const result = ChampagnePromotionAvailable();
     expect(result).toBe(false);
+  });
+
+  test("크리스마스 디데이 할인", () => {
+    require("../src/InputView").christmasInstance.getDate.mockReturnValue(25);
+
+    const result = receivedD_dayPromotion();
+
+    expect(result).toBe(3400);
+  });
+
+  test("크리스마스 디데이 할인 예외", () => {
+    require("../src/InputView").christmasInstance.getDate.mockReturnValue(26);
+
+    const result = receivedD_dayPromotion();
+
+    expect(result).toBe(0);
   });
 });
